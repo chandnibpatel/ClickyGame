@@ -10,20 +10,43 @@ class App extends Component{
   state={
     images,
     score:0,
-    highScore:0
+    highScore:0,
+    gameMessage:"Click an image to begin!", 
+    gameMsgColor: "correct"
   };
+  //Game should be reset on Game over
+  gameOver = () => {
+    if (this.state.score > this.state.highscore) {
+      this.setState({highscore: this.state.score}, function() {
+        console.log(this.state.highscore);
+      });
+    }
+    this.state.images.forEach(card => {
+      card.count = 0;
+    });
+    alert(`Game Over :( \nscore: ${this.state.score}`);
+    this.setState({score: 0});
+    return true;
+  }
+  //Click on Image increase count or end of game if same image clicked
   clickCount = id => {
-    this.state.cards.find((o, i) => {
-      if (o.id === id) {
-        if(images[i].count === 0){
-          images[i].count = images[i].count + 1;
+    this.state.images.find((obj, index) => {
+      if (obj.id === id) {
+        if(images[index].count === 0){
+          images[index].count = images[index].count + 1;
           this.setState({score : this.state.score + 1}, function(){
             console.log(this.state.score);
+            if (this.state.score > this.state.highScore)
+            this.setState({highScore:this.state.score});
           });
-          this.state.cards.sort(() => Math.random() - 0.5)
+        
+          this.setState({gameMessage:"You guessed correctly!"});
+          this.state.images.sort(() => Math.random() - 0.5)
           return true; 
         } else {
+          this.setState({gameMessage:"You guessed incorrectly!"});
           this.gameOver();
+          
         }
       }
     });
@@ -32,7 +55,7 @@ class App extends Component{
   render() {
     return (
       <Wrapper>
-        <Header score={this.state.score} highScore={this.state.highScore}>Clicky Game</Header>
+        <Header score={this.state.score} highScore={this.state.highScore} gameMessage={this.state.gameMessage}>Clicky Game</Header>
 
          {this.state.images.map(card => (
           <Card
