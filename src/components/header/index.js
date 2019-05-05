@@ -4,7 +4,7 @@ import "./Header.css";
 const header= props => (
     <div className="header">
     <div>{props.children}</div>
-    <div className={props.navMsgColor}>{props.gameMessage}</div>
+    <div className={props.gameMsgColor}>{props.gameMessage}</div>
     <div >
       Score: {props.score} <span className="pipe">| </span> Highscore: {props.highScore}
     </div>

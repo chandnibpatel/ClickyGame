@@ -3,6 +3,7 @@ import Wrapper from "./components/wrapper/Index";
 import Header from "./components/header";
 import Card from "./components/card"
 import images from "./images.json";
+import Banner from "./components/banner"
 
 import './App.css';
 class App extends Component{
@@ -37,7 +38,7 @@ class App extends Component{
           this.setState({score : this.state.score + 1}, function(){
             console.log(this.state.score);
             if (this.state.score > this.state.highScore)
-            this.setState({highScore:this.state.score});
+             this.setState({highScore:this.state.score});
           });
         
           this.setState({gameMessage:"You guessed correctly!"});
@@ -56,7 +57,8 @@ class App extends Component{
     return (
       <Wrapper>
         <Header score={this.state.score} highScore={this.state.highScore} gameMessage={this.state.gameMessage}>Clicky Game</Header>
-
+       <div className="container d-flex flex-wrap justify-content-center">
+       <Banner />
          {this.state.images.map(card => (
           <Card
             clickCount={this.clickCount}
@@ -64,7 +66,7 @@ class App extends Component{
             key={card.id}
             image={card.image}
           /> 
-        ))}
+        ))}</div>
       </Wrapper>
     );
   }
