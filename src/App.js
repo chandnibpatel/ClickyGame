@@ -47,7 +47,7 @@ class App extends Component{
         } else {
           this.setState({gameMessage:"You guessed incorrectly!"});
           this.gameOver();
-          
+          return true;
         }
       }
     });
